@@ -5,8 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-
-public class SQL {
+public class Database {
 
     // Connect to database.db
     public static Connection connect() {
@@ -17,14 +16,14 @@ public class SQL {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return conn;    
+        return conn;
     }
 
     // Insert into (table) (columns) values (values)
-    public void insert(String table, String columns, String values) {
-        String sql = "INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")";
+    public static void insert(String tableName, String columns, String values) {
+        String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + values + ")";
 
-        try (Connection conn = SQL.connect();
+        try (Connection conn = Database.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -34,9 +33,8 @@ public class SQL {
 
     // tests
     public static void main(String[] args) {
-
-        SQL db = new SQL();
         // insert ('112', 'testname') into test
-        db.insert("test", "id, name", "115, 'testname'");
+        Database.insert("test", "id, name", "115, 'testname'");
+
     }
 }
