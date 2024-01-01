@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Database {
 
-    /*
+    /**
      * Connect to database.db
      * @return Connection conn : connection object to database.db
      */
@@ -29,7 +29,7 @@ public class Database {
     }
 
 
-    /*
+    /**
      * Insert into (table) (columns) values (values)
      * @param String tableName : name of the table
      * @param String columns : list of columns
@@ -46,7 +46,7 @@ public class Database {
         }
     }
 
-    /*
+    /**
      * Select (columns) from (table)
      * @param String columns : list of columns
      * @param String tableName : name of the table
@@ -78,7 +78,7 @@ public class Database {
         return rows;
     }
 
-    /*
+    /**
      * Select (columns) from (table) where (condition)
      * @param String columns : list of columns
      * @param String tableName : name of the table
@@ -114,6 +114,6 @@ public class Database {
 
     // tests
     public static void main(String[] args) throws SQLException {
-        
+
     }
 }
