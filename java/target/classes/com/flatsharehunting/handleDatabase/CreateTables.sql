@@ -31,7 +31,6 @@ CREATE TABLE "Personne" (
 
 -- ListeLogements
 CREATE TABLE "ListeLogements" (
-    "idListeLogements" TEXT PRIMARY KEY NOT NULL,
     "idLogement" INTEGER NOT NULL,
     "idProjetColoc" TEXT NOT NULL,
     "idPersonneAjout" TEXT NOT NULL,
