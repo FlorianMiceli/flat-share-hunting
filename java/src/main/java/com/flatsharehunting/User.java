@@ -13,9 +13,7 @@ public class User {
      * @param nom
      */
     public static void createUser(String prenom, String nom){
-        Integer id = UUID.randomUUID().hashCode();
-        System.out.println(id);
-
+        Integer id = Math.abs(UUID.randomUUID().hashCode());
         Database.insert(
             "Personne", 
             "idPersonne, prenom, nom", 

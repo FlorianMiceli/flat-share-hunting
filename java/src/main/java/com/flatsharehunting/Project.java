@@ -11,7 +11,7 @@ public class Project {
      * @return Integer idProjetColoc
      */
     public static Integer createProject() {
-        Integer idProjetColoc = UUID.randomUUID().hashCode();
+        Integer idProjetColoc = Math.abs(UUID.randomUUID().hashCode());
         Database.insert(
             "ProjetColoc", 
             "idProjetColoc", 
