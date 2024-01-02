@@ -38,6 +38,9 @@ public class Database {
     public static void insert(String tableName, String columns, String values) {
         String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + values + ")";
 
+        //debug
+        System.out.println(sql);
+
         try (Connection conn = Database.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.executeUpdate();
@@ -55,6 +58,9 @@ public class Database {
     public static List<Map<String, Object>> select(String columns, String tableName) {
         String sql = "SELECT " + columns + " FROM " + tableName;
         List<Map<String, Object>> rows = new ArrayList<>();
+
+        //debug
+        System.out.println(sql);
 
         try (Connection conn = Database.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -89,6 +95,9 @@ public class Database {
         String sql = "SELECT " + columns + " FROM " + tableName + " WHERE " + condition;
         List<Map<String, Object>> rows = new ArrayList<>();
 
+        // debug
+        System.out.println(sql);
+
         try (Connection conn = Database.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery()) {
@@ -112,8 +121,29 @@ public class Database {
 
     }
 
+    /**
+     * Update (table) set (column) = (value) where (condition)
+     * @param String tableName : name of the table
+     * @param String column : column to update
+     * @param String value : value to set
+     * @param String condition : condition
+     */
+    public static void update(String tableName, String column, String value, String condition) {
+        String sql = "UPDATE " + tableName + " SET " + column + " = " + value + " WHERE " + condition;
+
+        // debug
+        System.out.println(sql);
+
+        try (Connection conn = Database.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     // tests
     public static void main(String[] args) throws SQLException {
-
+        update("Personne", "idProjetColoc", "1", "idPersonne='-1871158381'");
     }
 }
