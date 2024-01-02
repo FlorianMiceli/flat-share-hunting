@@ -6,6 +6,7 @@ import com.flatsharehunting.handleDatabase.Database;
 
 public class Project {
 
+    // TODO refactor
     /**
      * Create a project in the database
      * @return Integer idProjetColoc

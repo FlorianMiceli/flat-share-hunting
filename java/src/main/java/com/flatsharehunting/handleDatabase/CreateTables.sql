@@ -31,12 +31,15 @@ CREATE TABLE "Personne" (
 
 -- ListeLogements
 CREATE TABLE "ListeLogements" (
-    "idLogement" INTEGER NOT NULL,
+    "idImmeuble" INTEGER NOT NULL,
     "idProjetColoc" TEXT NOT NULL,
     "idPersonneAjout" TEXT NOT NULL,
+    "dateVisite" TEXT NOT NULL,
+    "offreAcceptee" BOOLEAN NOT NULL,
+    "abandon" BOOLEAN NOT NULL,
     FOREIGN KEY ("idPersonneAjout") REFERENCES "Personne" ("idPersonne"),
     FOREIGN KEY ("idProjetColoc") REFERENCES "ProjetColoc" ("idProjetColoc"),
-    FOREIGN KEY ("idLogement") REFERENCES "baseImmeuble91" ("idImmeuble")
+    FOREIGN KEY ("idImmeuble") REFERENCES "baseImmeuble91" ("idImmeuble")
 );
 
 -- ClasseDebit
@@ -48,5 +51,15 @@ CREATE TABLE "ClasseDebit" (
 
 -- ProjetColoc
 CREATE TABLE "ProjetColoc" (
-    "idProjetColoc" TEXT PRIMARY KEY NOT NULL
+    "idProjetColoc" TEXT PRIMARY KEY NOT NULL,
+    "critereDebitMin" REAL NOT NULL,
+    "critereVille" TEXT NOT NULL
+);
+
+-- VoteLogement
+CREATE TABLE "VoteLogement"(
+        "idImmeuble" INTEGER NOT NULL,
+        "idPersonne" INTEGER NOT NULL,
+        "note" INTEGER NOT NULL,
+        FOREIGN KEY ("idImmeuble") REFERENCES "ListeLogements" ("idImmeuble")
 );
