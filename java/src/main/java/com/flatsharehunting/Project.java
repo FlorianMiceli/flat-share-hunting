@@ -6,17 +6,18 @@ import com.flatsharehunting.handleDatabase.Database;
 
 public class Project {
 
-    // TODO refactor
     /**
      * Create a project in the database
+     * @param String critereVille
+     * @param Float critereDebitMin
      * @return Integer idProjetColoc
      */
-    public static Integer createProject() {
+    public static Integer createProject(String critereVille, Float critereDebitMin) {
         Integer idProjetColoc = Math.abs(UUID.randomUUID().hashCode());
         Database.insert(
             "ProjetColoc", 
-            "idProjetColoc", 
-            idProjetColoc.toString()
+            "idProjetColoc, critereVille, critereDebitMin",
+            idProjetColoc.toString()+"'"+critereVille+"'"+critereDebitMin.toString()
         );
         return idProjetColoc;
     }
