@@ -2,5 +2,5 @@
 /data/
 
 # maven
-/target/
+/java/target/
 *.class

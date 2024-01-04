@@ -20,8 +20,11 @@ public class CurrentUser {
         return prenom;
     }
 
-    // TODO
-    private static void setCurrentUser(Map<String, Object> user){
+    /**
+     * Logs a user
+     * @param user Map<String, Object>, use getUser
+     */
+    public static void setCurrentUser(Map<String, Object> user){
         CurrentUser.idPersonne = (Integer) user.get("idPersonne");
         CurrentUser.prenom = (String) user.get("prenom");
         CurrentUser.nom = (String) user.get("nom");

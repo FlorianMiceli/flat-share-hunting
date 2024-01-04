@@ -37,7 +37,6 @@ public class Project {
 
     // tests
     public static void main(String[] args) {
-        createProject();
     }
 
 }

@@ -34,6 +34,26 @@ public class User {
         String condition = String.format("nom='%s' AND prenom='%s'", nom, prenom);
         List<Map<String, Object>> result = Database.select(colomns, tableName, condition);
 
+
+        // check if not found or more than one user found
+        if(result.size() < 1){throw new Error("No user found");} 
+        if(result.size() > 1){throw new Error("More than one user found");}
+
+        return result.get(0);
+    }
+
+    /**
+     * Search for a user in db that matches params
+     * @param idPersonne
+     * @return Map<String, Object> user with idPersonne, prenom, nom
+     */
+    public static Map<String, Object> getUser(Integer idPersonne){
+        // get user from database
+        String colomns = "idPersonne, prenom, nom";
+        String tableName = "Personne";
+        String condition = String.format("idPersonne='%s'", idPersonne);
+        List<Map<String, Object>> result = Database.select(colomns, tableName, condition);
+
         // check if not found or more than one user found
         if(result.size() < 1){throw new Error("No user found");} 
         if(result.size() > 1){throw new Error("More than one user found");}
