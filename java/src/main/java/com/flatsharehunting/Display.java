@@ -21,6 +21,21 @@ public class Display {
     }
 
     /**
+     * Clear the terminal
+     */
+    public static void clearTerminal() {
+        System.out.println(ansi().eraseScreen().restorCursorPosition());
+    }
+
+    /**
+     * Print a message in red
+     * @param message String
+     */
+    public static String red(String message) {
+        return "\u001B[31m" + message + "\u001B[0m";
+    }
+
+    /**
      * Print a message as a title
      * Example: 
      * ---------------------- Title ----------------------
@@ -43,7 +58,7 @@ public class Display {
      * @return the chosen item
      */
     public static String userChoice(String question, String[] itemList) throws Exception {
-        System.out.println(ansi().eraseScreen());
+        clearTerminal();
 
         ConsolePrompt prompt = new ConsolePrompt();
         PromptBuilder promptBuilder = prompt.getPromptBuilder();
@@ -73,7 +88,7 @@ public class Display {
      * @return user input
      */
     public static String userInput(String question) throws Exception {
-        System.out.println(ansi().eraseScreen());
+        clearTerminal();
         ConsolePrompt prompt = new ConsolePrompt();                 
         PromptBuilder promptBuilder = prompt.getPromptBuilder();
         promptBuilder.createInputPrompt()                              

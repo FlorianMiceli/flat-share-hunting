@@ -13,6 +13,8 @@ import java.util.Map;
 
 public class Database {
 
+    private static String debug = "false";
+
     /**
      * Connect to database.db
      * @return Connection conn : connection object to database.db
@@ -38,8 +40,7 @@ public class Database {
     public static void insert(String tableName, String columns, String values) {
         String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + values + ")";
 
-        //debug
-        System.out.println(sql);
+        if(debug == "true"){System.out.println(sql);}
 
         try (Connection conn = Database.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -59,8 +60,7 @@ public class Database {
         String sql = "SELECT " + columns + " FROM " + tableName;
         List<Map<String, Object>> rows = new ArrayList<>();
 
-        //debug
-        System.out.println(sql);
+        if(debug == "true"){System.out.println(sql);}
 
         try (Connection conn = Database.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -95,8 +95,7 @@ public class Database {
         String sql = "SELECT " + columns + " FROM " + tableName + " WHERE " + condition;
         List<Map<String, Object>> rows = new ArrayList<>();
 
-        // debug
-        System.out.println(sql);
+        if(debug == "true"){System.out.println(sql);}
 
         try (Connection conn = Database.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
@@ -131,8 +130,7 @@ public class Database {
     public static void update(String tableName, String column, String value, String condition) {
         String sql = "UPDATE " + tableName + " SET " + column + " = " + value + " WHERE " + condition;
 
-        // debug
-        System.out.println(sql);
+        if(debug == "true"){System.out.println(sql);}
 
         try (Connection conn = Database.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
