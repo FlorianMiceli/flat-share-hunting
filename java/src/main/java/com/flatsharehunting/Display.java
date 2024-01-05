@@ -58,8 +58,6 @@ public class Display {
      * @return the chosen item
      */
     public static String userChoice(String question, String[] itemList) throws Exception {
-        clearTerminal();
-
         ConsolePrompt prompt = new ConsolePrompt();
         PromptBuilder promptBuilder = prompt.getPromptBuilder();
 
@@ -87,8 +85,8 @@ public class Display {
      * @param question
      * @return user input
      */
-    public static String userInput(String question) throws Exception {
-        clearTerminal();
+    public static String userInput(String question, Boolean clearTerminal) throws Exception {
+        if(clearTerminal){clearTerminal();}
         ConsolePrompt prompt = new ConsolePrompt();                 
         PromptBuilder promptBuilder = prompt.getPromptBuilder();
         promptBuilder.createInputPrompt()                              

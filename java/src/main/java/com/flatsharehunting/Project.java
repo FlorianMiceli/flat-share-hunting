@@ -12,12 +12,12 @@ public class Project {
      * @param Float critereDebitMin
      * @return Integer idProjetColoc
      */
-    public static Integer createProject(String critereVille, Float critereDebitMin) {
+    public static Integer createProject(String critereVille, String critereDebitMin) {
         Integer idProjetColoc = Math.abs(UUID.randomUUID().hashCode());
         Database.insert(
-            "ProjetColoc", 
+            "ProjetColoc",
             "idProjetColoc, critereVille, critereDebitMin",
-            idProjetColoc.toString()+"'"+critereVille+"'"+critereDebitMin.toString()
+            idProjetColoc.toString()+",'"+critereVille+"',"+critereDebitMin.toString()
         );
         return idProjetColoc;
     }
