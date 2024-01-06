@@ -33,9 +33,9 @@ public class Database {
 
     /**
      * Insert into (table) (columns) values (values)
-     * @param String tableName : name of the table
-     * @param String columns : list of columns
-     * @param String values : list of values
+     * @param tableName String : name of the table
+     * @param columns String : list of columns
+     * @param values String : list of values
      */
     public static void insert(String tableName, String columns, String values) {
         String sql = "INSERT INTO " + tableName + " (" + columns + ") VALUES (" + values + ")";
@@ -52,8 +52,8 @@ public class Database {
 
     /**
      * Select (columns) from (table)
-     * @param String columns : list of columns
-     * @param String tableName : name of the table
+     * @param columns String : list of columns
+     * @param tableName String : name of the table
      * @return List<Map<String, Object>> rows : list of rows, each row is a map, key is column name, value is column value
      */
     public static List<Map<String, Object>> select(String columns, String tableName) {
@@ -86,9 +86,9 @@ public class Database {
 
     /**
      * Select (columns) from (table) where (condition)
-     * @param String columns : list of columns
-     * @param String tableName : name of the table
-     * @param String condition : condition
+     * @param columns String : list of columns
+     * @param tableName String : name of the table
+     * @param condition String : condition
      * @return List<Map<String, Object>> rows : list of rows, each row is a map, key is column name, value is column value
      */
     public static List<Map<String, Object>> select(String columns, String tableName, String condition) {
@@ -121,11 +121,43 @@ public class Database {
     }
 
     /**
+     * Select (sqlRequest)
+     * @param sqlRequest
+     * @return List<Map<String, Object>> rows : list of rows, each row is a map, key is column name, value is column value
+     */
+    public static List<Map<String, Object>> select(String sqlRequest){
+        List<Map<String, Object>> rows = new ArrayList<>();
+
+        if(debug){System.out.println(sqlRequest);}
+
+        try (Connection conn = Database.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sqlRequest);
+            ResultSet rs = pstmt.executeQuery()) {
+
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                for (int i = 1; i <= rsmd.getColumnCount(); i++) {
+                    String colName = rsmd.getColumnName(i);
+                    Object colVal = rs.getObject(i);
+                    row.put(colName, colVal);
+                }
+                rows.add(row);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return rows;
+    }
+
+    /**
      * Update (table) set (column) = (value) where (condition)
-     * @param String tableName : name of the table
-     * @param String column : column to update
-     * @param String value : value to set
-     * @param String condition : condition
+     * @param tableName String : name of the table
+     * @param column String : column to update
+     * @param value String : value to set
+     * @param condition String : condition
      */
     public static void update(String tableName, String column, String value, String condition) {
         String sql = "UPDATE " + tableName + " SET " + column + " = " + value + " WHERE " + condition;

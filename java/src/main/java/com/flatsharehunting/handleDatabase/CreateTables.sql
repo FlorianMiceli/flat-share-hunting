@@ -29,8 +29,9 @@ CREATE TABLE "Personne" (
     FOREIGN KEY ("idProjetColoc") REFERENCES "ProjetColoc" ("idProjetColoc")
 );
 
--- ListeLogements
-CREATE TABLE "ListeLogements" (
+-- LogementColoc
+CREATE TABLE "LogementColoc" (
+    "idLogementColoc" INTEGER PRIMARY KEY NOT NULL,
     "idImmeuble" INTEGER NOT NULL,
     "idProjetColoc" TEXT NOT NULL,
     "idPersonneAjout" TEXT NOT NULL,
@@ -61,5 +62,5 @@ CREATE TABLE "VoteLogement"(
         "idImmeuble" INTEGER NOT NULL,
         "idPersonne" INTEGER NOT NULL,
         "note" INTEGER NOT NULL,
-        FOREIGN KEY ("idImmeuble") REFERENCES "ListeLogements" ("idImmeuble")
+        FOREIGN KEY ("idImmeuble") REFERENCES "LogementColoc" ("idImmeuble")
 );

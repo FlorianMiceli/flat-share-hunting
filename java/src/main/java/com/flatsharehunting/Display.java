@@ -2,6 +2,9 @@ package com.flatsharehunting;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
+
+import com.flatsharehunting.handleDatabase.Database;
 
 import static org.fusesource.jansi.Ansi.ansi;
 import de.codeshelf.consoleui.prompt.ConsolePrompt;
@@ -18,6 +21,14 @@ public class Display {
      */
     public static void print(String message) {
         System.out.println(message);
+    }
+
+    /**
+     * Print a message in italic
+     * @param message String
+     */
+    public static void printItalic(String message) {
+        System.out.println("\u001B[3m" + message + "\u001B[0m");
     }
 
     /**
@@ -102,9 +113,48 @@ public class Display {
         return output;
     }
 
+    /**
+     * Wait for the user to press enter with a message in italic
+     * @param message String
+     */
+    public static void waitForEnter(String message) throws IOException {
+        printItalic(message);
+        System.in.read();
+    }
+
+    public static void printLogement(Map<String, Object> logement) {
+        print("--------------------------------------------------------");
+        String type = logement.get("typeImmeuble").toString();
+        Map<String, String> debits = Logement.getDebits(logement.get("idImmeuble").toString());
+        switch (type) {
+            case "IM":
+                type = "🏢 Immeuble"; break;
+            case "PA":
+                type = "🏠 Pavillon"; break;
+            default:
+                type = "❔ Type de logement inconnu";  break;
+        }
+        // Type de logement
+        print(type);
+        // Adresse complète
+        print("📌 " + Logement.getFullAdress(logement));
+
+        // Debit min et max
+        print("📶 " + debits.get("debitMin") + "-" + debits.get("debitMax")+" Mbps");
+
+        // Moyenne des notes du groupe 
+        //TODO
+    }
+
     // tests
     public static void main(String[] args) throws IOException {
-        printAsTitle("Title");
+        Map<String, Object> logement = Database.select(
+            "idImmeuble, typeImmeuble, numeroAdresse, repetitionAdresse, nomVoieAdresse, codePostalAdresse, nomCommuneAdresse",
+            "baseImmeuble91",
+            "idImmeuble = 16212883"
+        ).get(0);
+
+        printLogement(logement);
     }
 
 }
