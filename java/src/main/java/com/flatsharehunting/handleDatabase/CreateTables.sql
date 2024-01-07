@@ -35,7 +35,7 @@ CREATE TABLE "LogementColoc" (
     "idImmeuble" INTEGER NOT NULL,
     "idProjetColoc" TEXT NOT NULL,
     "idPersonneAjout" TEXT NOT NULL,
-    "dateVisite" TEXT NOT NULL,
+    "dateVisite" TEXT,
     "offreAcceptee" BOOLEAN NOT NULL,
     "abandon" BOOLEAN NOT NULL,
     FOREIGN KEY ("idPersonneAjout") REFERENCES "Personne" ("idPersonne"),

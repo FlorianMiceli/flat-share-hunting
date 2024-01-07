@@ -60,6 +60,21 @@ public class Project {
         return result.get(0).get("critereVille").toString();
     }
 
+    public static void addLogementToProject(String idLogementColoc, String idImmeuble){
+        Database.insert(
+            "LogementColoc", 
+            "idLogementColoc, idImmeuble, idProjetColoc, idPersonneAjout, offreAcceptee, abandon", 
+            String.format("%s, %s, '%s', '%s', %s, %s", 
+                idLogementColoc, 
+                idImmeuble,
+                CurrentUser.getIdProjetColoc(), 
+                CurrentUser.getIdPersonne(), 
+                false, 
+                false
+            )
+        );
+    }
+
     // tests
     public static void main(String[] args) {
     }

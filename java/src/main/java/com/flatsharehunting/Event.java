@@ -172,8 +172,14 @@ public class Event {
             );
             switch (choice) {
                 case "Ajouter ce logement au projet":
-                    // add it to the project
-                    // TODO
+                    Project.addLogementToProject(
+                        String.valueOf(Math.abs(java.util.UUID.randomUUID().hashCode())),
+                        logement.get("idImmeuble").toString()
+                    );
+                    Display.print("Logement ajouté au projet ✅");
+                    Display.print("Retour au menu principal...");
+                    Thread.sleep(3000);
+                    Event.home();
                     break;
                 case "Retour au menu principal":
                     // go back to home
