@@ -1,6 +1,9 @@
 package com.flatsharehunting;
 
+import java.util.List;
 import java.util.Map;
+
+import com.flatsharehunting.handleDatabase.Database;
 
 public class CurrentUser {
 
@@ -48,14 +51,37 @@ public class CurrentUser {
         User.setIdProjetColoc(idPersonneToAdd, idProjetColoc);
     }
 
+    /**
+     * Rate a logement of project
+     * @param idLogementColoc
+     * @param note
+     */
+    public static void rateLogementColoc(String idLogementColoc, Integer note){
+        if(getNoteForLogement(idLogementColoc) != null){
+            throw new Error("Vous avez déjà noté ce logement");
+        }
+        Database.insert(
+            "NoteLogement",
+            "idPersonne, idLogementColoc, note",
+            String.format("%s, %s, %s", CurrentUser.getIdPersonne(), idLogementColoc, note)
+        );
+    }
+
+    public static String getNoteForLogement(String idLogementColoc){
+        List<Map<String, Object>> result = Database.select(
+            "note",
+            "NoteLogement",
+            String.format("idPersonne=%s AND idLogementColoc=%s", CurrentUser.getIdPersonne(), idLogementColoc)
+        );
+        if(result.size() == 0){
+            return null;
+        }
+        return result.get(0).get("note").toString();
+    }
+
     // tests
     public static void main(String[] args) {
-        //setCurrentUser
-        Map<String, Object> user = User.getUser("John", "Doe");
-        setCurrentUser(user);
-        System.out.println(getIdPersonne());
-        System.out.println(getPrenom());
-        System.out.println(getNom());
+        rateLogementColoc("689396812", 5);
     }
 
 }

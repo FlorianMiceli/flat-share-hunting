@@ -1,5 +1,6 @@
 package com.flatsharehunting;
 
+import java.util.List;
 import java.util.Map;
 
 import com.flatsharehunting.handleDatabase.Database;
@@ -26,17 +27,17 @@ public class Event {
         );
 
         if(!currenUserHasProject){
-            String choice2 = Display.userChoice(
+            String choice = Display.userChoice(
                 "Que voulez vous faire ?", 
                 new String[] {"Créer un projet de colocation"} 
             );
-            switch (choice2) {
+            switch (choice) {
                 case "Créer un projet de colocation":
                     Event.createProjetColoc();
                     break;
             }
         } else {
-            String choice2 = Display.userChoice(
+            String choice = Display.userChoice(
                 "Que voulez vous faire ?", 
                 new String[] {
                     "Voir les logements du projet", 
@@ -45,19 +46,15 @@ public class Event {
                     "Voir les personnes de la colocation"
                 } 
             );
-            switch (choice2) {
+            switch (choice) {
                 case "Voir les logements du projet":
-                    // voir les logements
-                    break;
+                    Event.seeLogementInProjectListAndActions(); break;
                 case "Ajouter un logement":
-                    Event.addLogementToProject();
-                    break;
+                    Event.addLogementToProject(); break;
                 case "Ajouter une personne a la colocation":
-                    Event.addPersonneToProject();
-                    break;
+                    Event.addPersonneToProject(); break;
                 case "Voir les personnes de la colocation":
-                    Event.seePeopleInProjectList();
-                    break;
+                    Event.seePeopleInProjectList(); break;
             }
         }
     }
@@ -138,6 +135,10 @@ public class Event {
         Event.home();
     }
 
+    /**
+     * Recherche de logement selon les criteres du projet
+     * Demande si l'utilisateur veut l'ajouter, en ajoute un autre, ou retourne au menu principal
+     */
     public static void addLogementToProject() throws Exception{
         Display.clearTerminal();
         Display.printAsTitle("🔎 Recherche de logement");
@@ -172,21 +173,110 @@ public class Event {
             );
             switch (choice) {
                 case "Ajouter ce logement au projet":
+                    String idLogementColoc = String.valueOf(Math.abs(java.util.UUID.randomUUID().hashCode())); 
+                    Event.rateLogementColoc(idLogementColoc);
                     Project.addLogementToProject(
-                        String.valueOf(Math.abs(java.util.UUID.randomUUID().hashCode())),
-                        logement.get("idImmeuble").toString()
+                        idLogementColoc,
+                        logement.get("idImmeuble").toString(),
+                        Float.parseFloat(logement.get("debitMin").toString()),
+                        Float.parseFloat(logement.get("debitMax").toString())
                     );
+
                     Display.print("Logement ajouté au projet ✅");
                     Display.print("Retour au menu principal...");
                     Thread.sleep(3000);
                     Event.home();
                     break;
                 case "Retour au menu principal":
-                    // go back to home
                     Event.home();
                     break;
             }
         }
+    }
 
+    /**
+     * Print la liste des logements du projet
+     * Et propose de les noter, mettre une date de visite, abandonner, ou marquer le bail comme signé
+     * @throws Exception
+     */
+    public static void seeLogementInProjectListAndActions() throws Exception{
+        Display.printItalic("Chargement...");
+        List<Map<String, Object>> logements = Project.getLogementsColoc();
+        for (Map<String, Object> logement : logements) {
+            if(logement.get("abandon").toString().equals("0")){
+                Display.printLogement(logement);
+            }
+        }
+        Display.printDivider();
+
+        // actions
+        String choice = Display.userChoice(
+            "Que voulez vous faire ?", 
+            new String[] {
+                "Noter un logement", 
+                "Mettre une date de visite", 
+                "Abandonner un logement", 
+                "Marquer l'offre d'un logement comme acceptée", 
+                "Retour au menu principal"
+            }
+        );
+        switch (choice) {
+            case "Noter un logement":
+                String idLogementColoc = Display.userInput("Entrez l'identifiant du logement à noter: ", false);
+                Event.rateLogementColoc(idLogementColoc);
+                Display.print("Logement noté ✅");
+                Display.printItalic("Retour au menu principal...");
+                Thread.sleep(3000);
+                Event.home();
+                break;
+            case "Mettre une date de visite":
+                String idLogementColoc2 = Display.userInput("Entrez l'identifiant du logement : ", false);
+                String dateVisite = Display.userInput("Entrez la date de visite : ", false);
+                Project.setDateVisite(idLogementColoc2, dateVisite);
+                Display.print("Date de visite ajoutée ✅");
+                Display.printItalic("Retour au menu principal...");
+                Thread.sleep(3000);
+                Event.home();
+                break;
+            case "Abandonner un logement":
+                String idLogementColoc3 = Display.userInput("Entrez l'identifiant du logement : ", false);
+                Project.abandonLogement(idLogementColoc3);
+                Display.print("Logement abandonné ✅");
+                Display.printItalic("Retour au menu principal...");
+                Thread.sleep(3000);
+                Event.home();
+                break;
+            case "Marquer l'offre d'un logement comme acceptée":
+                String idLogementColoc4 = Display.userInput("Entrez l'identifiant du logement : ", false);
+                Project.acceptOffreLogement(idLogementColoc4);
+                Display.print("Offre acceptée ✅");
+                Display.printItalic("Retour au menu principal...");
+                Thread.sleep(3000);
+                Event.home();
+                break;
+            case "Retour au menu principal":
+                Event.home(); break;
+        }
+    }
+
+    /**
+     * Demande une note entre 1 et 5 et l'ajoute à NoteLogement
+     * @param idLogementColoc
+     */
+    public static void rateLogementColoc(String idLogementColoc) throws Exception{
+        String note = Display.userChoice(
+            "Notez ce logement :", 
+            new String[] {
+                "1 ⭐",
+                "2 ⭐",
+                "3 ⭐",
+                "4 ⭐",
+                "5 ⭐"
+            }
+        );
+        CurrentUser.rateLogementColoc(
+            idLogementColoc, 
+            Integer.parseInt(Character.toString(note.charAt(0)))
+        );
     }
 }

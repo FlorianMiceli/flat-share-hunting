@@ -129,13 +129,27 @@ public class Display {
         System.in.read();
     }
 
+    /**
+     * Print a logement
+     * Example:
+     * ----------------------------------------------------
+     * 🆔 627828762
+     * 
+     * 🏢 Immeuble
+     * 📌 11 Rue du Chemin des Femmes, 91377 Massy
+     * 📶 1 Gbps
+     *
+     * ⭐ 4.2/5
+     * 👤 Ajouté par : Florian Miceli
+     * ----------------------------------------------------
+     * @param logement Map<String, Object>
+     */
     public static void printLogement(Map<String, Object> logement) {
         printDivider();
+
         String type = logement.get("typeImmeuble").toString();
-        Map<String, String> debits = Map.of(
-            "debitMin", logement.get("debitMin").toString(),
-            "debitMax", logement.get("debitMax").toString()
-        );
+        Float debitMin = Float.parseFloat(logement.get("debitMin").toString());
+        Float debitMax = Float.parseFloat(logement.get("debitMax").toString());
         switch (type) {
             case "IM":
                 type = "🏢 Immeuble"; break;
@@ -150,23 +164,43 @@ public class Display {
         print("📌 " + Logement.getFullAdress(logement));
 
         // Debit min et max
-        String debitMin = debits.get("debitMin");
-        String debitMax = debits.get("debitMax");
-        if (debitMin.equals("1000.0")){
+        if (debitMin == 1000.0f){
             print("📶 1 Gbps");
         }else{
             print("📶 " + debitMin + "-" + debitMax+" Mbps");
         }
 
-        // Moyenne des notes du groupe 
-        if(logement.containsKey("noteMoyenne")){
-            print("");
-            print("📝 Note moyenne du groupe : " + logement.get("noteMoyenne").toString());
-        }
+        if(logement.containsKey("idPersonneAjout")){
+            if(logement.get("idPersonneAjout") != null){
+                print("");
 
-        // Date de visite
-        if(logement.containsKey("dateVisite")){
-            print("📅 Visite le" + logement.get("dateVisite").toString());
+                // Moyenne des notes du goupe
+                // si CurrentUser a voté, print (Votre note : note/5) en vert après la note moyenne
+                String currentUserNote = CurrentUser.getNoteForLogement(logement.get("idLogementColoc").toString());
+                String currentUserNoteMessage = "";
+                if(currentUserNote != null){
+                    currentUserNoteMessage ="\u001B[3m\u001B[32mVotre note : " + CurrentUser.getNoteForLogement(logement.get("idLogementColoc").toString()) + "/5\u001B[0m \u001B[0m";
+                }
+                print("⭐ " + Project.getNoteMoyenne(logement.get("idLogementColoc").toString()) + "/5 " + currentUserNoteMessage);
+                
+                // Ajouté par
+                Map<String, Object> user = User.getUser(Integer.parseInt(logement.get("idPersonneAjout").toString()));
+                print(
+                    "👤 Ajouté par : " + 
+                    user.get("prenom").toString() + " " + 
+                    user.get("nom").toString()
+                );
+
+                // Date de visite
+                if(logement.containsKey("dateVisite")){
+                    if(logement.get("dateVisite") != null){
+                        print("📅 Visite le " + logement.get("dateVisite").toString());
+                    }
+                }
+
+                //identifiant 
+                print("🆔 "+logement.get("idLogementColoc").toString());
+            }
         }
     }
 

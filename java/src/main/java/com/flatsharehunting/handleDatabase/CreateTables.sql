@@ -38,6 +38,8 @@ CREATE TABLE "LogementColoc" (
     "dateVisite" TEXT,
     "offreAcceptee" BOOLEAN NOT NULL,
     "abandon" BOOLEAN NOT NULL,
+    "debitMin" REAL NOT NULL,
+    "debitMax" REAL NOT NULL,
     FOREIGN KEY ("idPersonneAjout") REFERENCES "Personne" ("idPersonne"),
     FOREIGN KEY ("idProjetColoc") REFERENCES "ProjetColoc" ("idProjetColoc"),
     FOREIGN KEY ("idImmeuble") REFERENCES "baseImmeuble91" ("idImmeuble")
@@ -62,5 +64,6 @@ CREATE TABLE "NoteLogement"(
         "idLogementColoc" INTEGER NOT NULL,
         "idPersonne" INTEGER NOT NULL,
         "note" INTEGER NOT NULL,
-        FOREIGN KEY ("idLogementColoc") REFERENCES "LogementColoc" ("idLogementColoc")
+        FOREIGN KEY ("idLogementColoc") REFERENCES "LogementColoc" ("idLogementColoc"),
+        FOREIGN KEY ("idPersonne") REFERENCES "Personne" ("idPersonne")
 );
