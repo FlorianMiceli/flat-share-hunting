@@ -8,16 +8,6 @@ import com.flatsharehunting.handleDatabase.Database;
 
 public class Logement {
 
-    // /**
-    //  * Get the type of a logement
-    //  * @param idImmeuble
-    //  * @return String type 'IM' or 'PA'
-    //  */
-    // public static String getType(String idImmeuble){
-    //     List<Map<String, Object>> result = Database.select("typeImmeuble", "baseImmeuble91", "idImmeuble = " + idImmeuble);
-    //     return result.get(0).get("typeImmeuble").toString();
-    // }
-
     /**
      * Exemple : 1 bis rue de la paix, 75000 Paris
      * @param idImmeuble String
@@ -38,40 +28,46 @@ public class Logement {
     }
 
     /**
-     * Get the debit min and max of a logement
-     * Randomly select a debit from the corresponding logement in ClasseDebit
-     * The same logement will always have the same debit (Randomness is based on the idImmeuble)
-     * @param idImmeuble String
-     * @return Map<String, String> debitMin and debitMax
+     * Get a random logement in a specific city, with a debit higher than debitMin and saturation to false
+     * @param ville 
+     * @param debitMin 
+     * @return Map<String, Object> logement
      */
-    public static Map<String, String> getDebits(String idImmeuble){
+    public static Map<String, Object> getRandomLogement(String ville, Float debitMin){
         List<Map<String, Object>> result = Database.select(
             """
-            SELECT cd."debitMin", cd."debitMax"
+            SELECT bi."idImmeuble", bi."typeImmeuble", bi."numeroAdresse", bi."repetitionAdresse", bi."nomVoieAdresse", bi."codePostalAdresse", bi."nomCommuneAdresse", cd."debitMin", cd."debitMax"
             FROM "baseImmeuble91" bi
             JOIN "eligibiliteActuel91" ea ON bi."idImmeuble" = ea."idImmeuble"
-            JOIN "ClasseDebit" cd ON ea."classeDebitMontant" = cd."codeEligibilite"
-            WHERE bi."idImmeuble" = 
-            """ + idImmeuble
+            JOIN "ClasseDebit" cd ON ea."classeDebitDescendant" = cd."codeEligibilite"
+            WHERE bi."nomCommuneAdresse" =  """ +"'"+ ville +"'"+ """
+             AND cd."debitMin" >= """ + debitMin + """
+             AND ea."saturation" != 't'
+            ORDER BY RANDOM()
+            """
         );
+        return result.get(0);
+    }
 
-        // Get a random debit, but the same logement always have the same debit
-        // To do that, we generate a random seed from the idImmeuble
-        // The same idImmeuble will always have the same seed
-        Random seed = new Random(Integer.parseInt(idImmeuble));
-        Integer randomIndex = seed.nextInt(result.size());
-        Map<String, Object> debit = result.get(randomIndex);
-        return Map.of(
-            "debitMin", debit.get("debitMin").toString(),
-            "debitMax", debit.get("debitMax").toString()
+    /**
+     * Get the debit criteria of the project
+     * @return Float critereDebitMin
+     */
+    public static Float getDebitMinProjetColoc(){
+        List<Map<String, Object>> result = Database.select(
+            """
+            SELECT "critereDebitMin"
+            FROM "ProjetColoc"
+            WHERE "idProjetColoc" = 
+            """ + CurrentUser.getIdProjetColoc()
         );
+        return Float.parseFloat(result.get(0).get("critereDebitMin").toString());
     }
 
     // tests
     public static void main(String[] args) {
-        Map<String, String> debits = getDebits("16212883");
-        System.out.println(debits.get("debitMin"));
-        System.out.println(debits.get("debitMax"));
+        Map<String, Object> logement = getRandomLogement("Massy", 100.0f);
+        Display.printLogement(logement);
     }
 
 }

@@ -57,10 +57,10 @@ CREATE TABLE "ProjetColoc" (
     "critereVille" TEXT NOT NULL
 );
 
--- VoteLogement
-CREATE TABLE "VoteLogement"(
-        "idImmeuble" INTEGER NOT NULL,
+-- NoteLogement
+CREATE TABLE "NoteLogement"(
+        "idLogementColoc" INTEGER NOT NULL,
         "idPersonne" INTEGER NOT NULL,
         "note" INTEGER NOT NULL,
-        FOREIGN KEY ("idImmeuble") REFERENCES "LogementColoc" ("idImmeuble")
+        FOREIGN KEY ("idLogementColoc") REFERENCES "LogementColoc" ("idLogementColoc")
 );

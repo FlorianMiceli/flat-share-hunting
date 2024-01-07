@@ -15,7 +15,17 @@ public class Event {
         Display.printAsTitle("👋 Bienvenue " + CurrentUser.getPrenom() + " " + CurrentUser.getNom());
 
         // Select action depending on if the user is in a project or not
-        if(CurrentUser.getIdProjetColoc() == null){
+        Boolean currenUserHasProject = (
+            (CurrentUser.getIdProjetColoc() != null) 
+            && 
+            (Database.select(
+                "idProjetColoc",
+                "ProjetColoc",
+                "idProjetColoc=" + CurrentUser.getIdProjetColoc()
+            ).size() != 0)
+        );
+
+        if(!currenUserHasProject){
             String choice2 = Display.userChoice(
                 "Que voulez vous faire ?", 
                 new String[] {"Créer un projet de colocation"} 
@@ -83,7 +93,7 @@ public class Event {
         String idProjetColoc = Math.abs(java.util.UUID.randomUUID().hashCode()) + "";
         String critereVille = Display.userInput("Entrez la ville du logement souhaité:", false);
         String critereDebitMin = Display.userInput("Entrez le debit minimum de la connexion souhaité: ", false);
-        Project.createProject(critereVille, critereDebitMin);
+        Project.createProject(critereVille, critereDebitMin, idProjetColoc);
         CurrentUser.setIdProjetColoc(
             CurrentUser.getIdPersonne(),
             Integer.parseInt(idProjetColoc)
@@ -128,17 +138,49 @@ public class Event {
         Event.home();
     }
 
-    public static void addLogementToProject(){
+    public static void addLogementToProject() throws Exception{
         Display.clearTerminal();
-        // get a random logement in the city of the project, with a debit higher than the project's debit and saturation to false
+        Display.printAsTitle("🔎 Recherche de logement");
+        String ville = Project.getVilleProjetColoc();
+        Float debitMin = Logement.getDebitMinProjetColoc();
 
-        // print it
-        
+        String choice = "Autre logement";
+        while (choice.equals("Autre logement")) {
+            Display.clearTerminal();
+            Display.printAsTitle("🔎 Recherche de logement");
+            Display.printItalic("Recherche selon les critères...");
 
-        // prompt user to choose if we should add it to the project or not
-        // 3 choices :
-        // - add it to the project
-        // - get another random logement
-        // - go back to home
+            // get a random logement in the city of the project, with a debit higher than the project's debit and saturation to false
+            Map<String, Object> logement = Logement.getRandomLogement(ville, debitMin);
+            if (logement == null) {
+                Display.print("Aucun logement ne correspond aux critères du projet");
+                Display.waitForEnter("Appuyez sur entrée pour revenir au menu principal...");
+                Event.home();
+            }
+    
+            // print it
+            Display.printLogement(logement);
+            Display.printDivider();
+    
+            choice = Display.userChoice(
+                "Que voulez vous faire ?", 
+                new String[] {
+                    "Ajouter ce logement au projet", 
+                    "Autre logement", 
+                    "Retour au menu principal"
+                }
+            );
+            switch (choice) {
+                case "Ajouter ce logement au projet":
+                    // add it to the project
+                    // TODO
+                    break;
+                case "Retour au menu principal":
+                    // go back to home
+                    Event.home();
+                    break;
+            }
+        }
+
     }
 }

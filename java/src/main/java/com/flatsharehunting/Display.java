@@ -39,6 +39,13 @@ public class Display {
     }
 
     /**
+     * Print a divider
+     */
+    public static void printDivider() {
+        Display.print("----------------------------------------------------");
+    }
+
+    /**
      * Print a message in red
      * @param message String
      */
@@ -123,9 +130,12 @@ public class Display {
     }
 
     public static void printLogement(Map<String, Object> logement) {
-        print("--------------------------------------------------------");
+        printDivider();
         String type = logement.get("typeImmeuble").toString();
-        Map<String, String> debits = Logement.getDebits(logement.get("idImmeuble").toString());
+        Map<String, String> debits = Map.of(
+            "debitMin", logement.get("debitMin").toString(),
+            "debitMax", logement.get("debitMax").toString()
+        );
         switch (type) {
             case "IM":
                 type = "🏢 Immeuble"; break;
@@ -140,10 +150,24 @@ public class Display {
         print("📌 " + Logement.getFullAdress(logement));
 
         // Debit min et max
-        print("📶 " + debits.get("debitMin") + "-" + debits.get("debitMax")+" Mbps");
+        String debitMin = debits.get("debitMin");
+        String debitMax = debits.get("debitMax");
+        if (debitMin.equals("1000.0")){
+            print("📶 1 Gbps");
+        }else{
+            print("📶 " + debitMin + "-" + debitMax+" Mbps");
+        }
 
         // Moyenne des notes du groupe 
-        //TODO
+        if(logement.containsKey("noteMoyenne")){
+            print("");
+            print("📝 Note moyenne du groupe : " + logement.get("noteMoyenne").toString());
+        }
+
+        // Date de visite
+        if(logement.containsKey("dateVisite")){
+            print("📅 Visite le" + logement.get("dateVisite").toString());
+        }
     }
 
     // tests

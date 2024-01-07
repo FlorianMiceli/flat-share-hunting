@@ -1,6 +1,7 @@
 package com.flatsharehunting;
 
-import java.util.UUID;
+import java.util.List;
+import java.util.Map;
 
 import com.flatsharehunting.handleDatabase.Database;
 
@@ -12,14 +13,12 @@ public class Project {
      * @param Float critereDebitMin
      * @return Integer idProjetColoc
      */
-    public static Integer createProject(String critereVille, String critereDebitMin) {
-        Integer idProjetColoc = Math.abs(UUID.randomUUID().hashCode());
+    public static void createProject(String critereVille, String critereDebitMin, String idProjetColoc) {
         Database.insert(
             "ProjetColoc",
             "idProjetColoc, critereVille, critereDebitMin",
-            idProjetColoc.toString()+",'"+critereVille+"',"+critereDebitMin.toString()
+            idProjetColoc+",'"+critereVille+"',"+critereDebitMin.toString()
         );
-        return idProjetColoc;
     }
 
     /**
@@ -33,6 +32,32 @@ public class Project {
             idProjetColoc.toString(),
             String.format("idPersonne='%s'", idPersonne)
         );
+    }
+
+    public static void getNoteLogementColoc(String idLogementColoc){
+        List<Map<String, Object>> result = Database.select(
+            """
+            SELECT AVG(note) AS "note"
+            FROM "VoteLogement"
+            WHERE "idLogementColoc" = 
+            """ + idLogementColoc
+        );
+        // TODO test + return
+    }
+
+    /**
+     * Get the city criteria of the project
+     * @return String critereVille
+     */
+    public static String getVilleProjetColoc(){
+        List<Map<String, Object>> result = Database.select(
+            """
+            SELECT "critereVille"
+            FROM "ProjetColoc"
+            WHERE "idProjetColoc" = 
+            """ + CurrentUser.getIdProjetColoc()
+        );
+        return result.get(0).get("critereVille").toString();
     }
 
     // tests
