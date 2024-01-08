@@ -15,7 +15,7 @@ Using data from "Ma connexion internet"
 
 
 # voir les logements
-<img width="514" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/f4316a85-e21b-4d67-b2aa-04baf7474768">
+<img width="700" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/f4316a85-e21b-4d67-b2aa-04baf7474768">
 
 #options
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/fe88f4b7-80b2-43a7-865c-66ffeaaa41ae">
