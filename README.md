@@ -5,10 +5,16 @@ A third year school project to learn Java.
 
 Using data from "Ma connexion internet"
 
+# Dependencies
+- 
 
 # WIP
 
 - handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
+- 
+
+# Demo
+
 
 # Login
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/252c8486-dfbe-4601-bc56-45fb2637093d">
@@ -25,3 +31,6 @@ Using data from "Ma connexion internet"
 
 # Créer proj critere
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/5c4da76e-1e31-4e6b-a984-d01c68ac3f21">
+
+# logmenet accepte
+<img width="959" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/67c64168-3b98-4a4f-bff9-7667636861c1">
