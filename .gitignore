@@ -8,5 +8,6 @@
 
 
 # maven
-/java/target/
+/java/target/*
+!/java/target/site/
 *.class

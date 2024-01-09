@@ -51,6 +51,13 @@ public class Project {
         return result.get(0).get("critereVille").toString();
     }
 
+    /**
+     * Add a logement to the project
+     * @param idLogementColoc String
+     * @param idImmeuble String
+     * @param debitMin Float
+     * @param debitMax Float
+     */
     public static void addLogementToProject(String idLogementColoc, String idImmeuble, Float debitMin, Float debitMax){
         Database.insert(
             "LogementColoc", 
@@ -68,6 +75,10 @@ public class Project {
         );
     }
 
+    /**
+     * Get the logements of the project with all values needed to display, without the logements abandoned
+     * @return List<Map<String,Object>> logements
+     */
     public static List<Map<String,Object>> getLogementsColoc(){
         return Database.select(
         """
