@@ -65,8 +65,8 @@ public class User {
         List<Map<String, Object>> result = Database.select(colomns, tableName, condition);
 
         // check if not found or more than one user found
-        if(result.size() < 1){throw new Error("No user found");} 
-        if(result.size() > 1){throw new Error("More than one user found");}
+        if(result.size() < 1){throw new Error(Display.red("No user found"));} 
+        if(result.size() > 1){throw new Error(Display.red("More than one user found"));}
 
         return result.get(0);
     }

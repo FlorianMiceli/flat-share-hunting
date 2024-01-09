@@ -15,7 +15,7 @@ public class Event {
         Display.clearTerminal();
         Display.printAsTitle("👋 Bienvenue " + CurrentUser.getPrenom() + " " + CurrentUser.getNom());
 
-        // Select action depending on if the user is in a project or not
+        // Select action depending on if the user is in a project or not, and if a logement is accepted or not
         Boolean currenUserHasProject = (
             (CurrentUser.getIdProjetColoc() != null) 
             && 
@@ -25,6 +25,13 @@ public class Event {
                 "idProjetColoc=" + CurrentUser.getIdProjetColoc()
             ).size() != 0)
         );
+        if(currenUserHasProject){
+            Map<String, Object> logementAccepted = Project.getLogementAccepted();
+            if(logementAccepted != null){
+                Display.projectOutcome(logementAccepted);
+                return;
+            }
+        }
 
         if(!currenUserHasProject){
             String choice = Display.userChoice(
@@ -202,10 +209,27 @@ public class Event {
     public static void seeLogementInProjectListAndActions() throws Exception{
         Display.printItalic("Chargement...");
         List<Map<String, Object>> logements = Project.getLogementsColoc();
+
+        //if no logement
+        if(logements.size() == 0){
+            Display.printDivider();
+            Display.print("Aucun logement dans le projet");
+            Display.printDivider();
+            Display.waitForEnter("Appuyez sur entrée pour revenir au menu principal...");
+            Event.home();
+            return;
+        }
+
+        //order by noteMoyenne desc
+        logements.sort((logement1, logement2) -> {
+            Float note1 = Project.getNoteMoyenne(logement1.get("idLogementColoc").toString());
+            Float note2 = Project.getNoteMoyenne(logement2.get("idLogementColoc").toString());
+            return note2.compareTo(note1);
+        });
+
+        // print logements
         for (Map<String, Object> logement : logements) {
-            if(logement.get("abandon").toString().equals("0")){
-                Display.printLogement(logement);
-            }
+            Display.printLogement(logement);
         }
         Display.printDivider();
 
@@ -257,6 +281,7 @@ public class Event {
             case "Retour au menu principal":
                 Event.home(); break;
         }
+        return;
     }
 
     /**
@@ -267,16 +292,16 @@ public class Event {
         String note = Display.userChoice(
             "Notez ce logement :", 
             new String[] {
-                "1 ⭐",
-                "2 ⭐",
-                "3 ⭐",
-                "4 ⭐",
-                "5 ⭐"
+                "✨",
+                "✨✨",
+                "✨✨✨",
+                "✨✨✨✨",
+                "✨✨✨✨✨"
             }
         );
         CurrentUser.rateLogementColoc(
             idLogementColoc, 
-            Integer.parseInt(Character.toString(note.charAt(0)))
+            note.length()
         );
     }
 }

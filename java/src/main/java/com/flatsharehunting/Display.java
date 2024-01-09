@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.flatsharehunting.handleDatabase.Database;
-
 import static org.fusesource.jansi.Ansi.ansi;
 import de.codeshelf.consoleui.prompt.ConsolePrompt;
 import de.codeshelf.consoleui.prompt.PromtResultItemIF;
@@ -133,14 +131,13 @@ public class Display {
      * Print a logement
      * Example:
      * ----------------------------------------------------
-     * 🆔 627828762
-     * 
      * 🏢 Immeuble
      * 📌 11 Rue du Chemin des Femmes, 91377 Massy
      * 📶 1 Gbps
      *
      * ⭐ 4.2/5
      * 👤 Ajouté par : Florian Miceli
+     * 🆔 627828762
      * ----------------------------------------------------
      * @param logement Map<String, Object>
      */
@@ -181,7 +178,7 @@ public class Display {
                 if(currentUserNote != null){
                     currentUserNoteMessage ="\u001B[3m\u001B[32mVotre note : " + CurrentUser.getNoteForLogement(logement.get("idLogementColoc").toString()) + "/5\u001B[0m \u001B[0m";
                 }
-                print("⭐ " + Project.getNoteMoyenne(logement.get("idLogementColoc").toString()) + "/5 " + currentUserNoteMessage);
+                print("✨ " + Project.getNoteMoyenne(logement.get("idLogementColoc").toString()) + "/5 " + currentUserNoteMessage);
                 
                 // Ajouté par
                 Map<String, Object> user = User.getUser(Integer.parseInt(logement.get("idPersonneAjout").toString()));
@@ -204,15 +201,25 @@ public class Display {
         }
     }
 
+    /**
+     * Print final message when a logement is accepted
+     * @param logementAccepted Map<String, Object>
+     */
+    public static void projectOutcome(Map<String, Object> logementAccepted) throws Exception{
+        Display.print("🎉 Félicitations ! Votre colocation va prendre vie !");
+        Display.printLogement(logementAccepted);
+        Display.printDivider();
+        Display.print("👥 Voici les colocataires :");
+        Project.printPersonnesProjet();
+        Display.printDivider();
+        Display.waitForEnter("Appuyez sur entrée pour quitter l'application");
+    }
+
+
     // tests
     public static void main(String[] args) throws IOException {
-        Map<String, Object> logement = Database.select(
-            "idImmeuble, typeImmeuble, numeroAdresse, repetitionAdresse, nomVoieAdresse, codePostalAdresse, nomCommuneAdresse",
-            "baseImmeuble91",
-            "idImmeuble = 16212883"
-        ).get(0);
+        System.out.println("✨✨".length());
 
-        printLogement(logement);
     }
 
 }

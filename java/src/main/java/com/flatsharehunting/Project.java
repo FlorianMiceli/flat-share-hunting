@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.flatsharehunting.handleDatabase.Database;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 
 public class Project {
 
@@ -92,7 +94,7 @@ public class Project {
         JOIN
             baseImmeuble91 BI ON LC."idImmeuble" = BI."idImmeuble"
         WHERE
-            LC."idProjetColoc" = '37050816'
+            LC."idProjetColoc" = """ + CurrentUser.getIdProjetColoc() + """
             AND LC."abandon" = false
         """
         );
@@ -103,7 +105,9 @@ public class Project {
      * @param idLogementColoc
      * @return Float noteMoyenne
      */
-    public static Float getNoteMoyenne(String idLogementColoc){
+    // ...
+
+    public static Float getNoteMoyenne(String idLogementColoc) {
         List<Map<String, Object>> result = Database.select(
             """
             SELECT AVG("note") AS "noteMoyenne"
@@ -111,7 +115,15 @@ public class Project {
             WHERE "idLogementColoc" = 
             """ + idLogementColoc
         );
-        return Float.parseFloat(result.get(0).get("noteMoyenne").toString());
+        
+        String noteMoyenneStr = result.get(0).get("noteMoyenne").toString();
+        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
+        Float noteMoyenne = Float.parseFloat(df.format(Float.parseFloat(noteMoyenneStr)));
+        
+        return noteMoyenne;
     }
 
     /**
@@ -155,10 +167,60 @@ public class Project {
         );
     }
 
+    public static Map<String, Object> getLogementAccepted(){
+        List<Map<String, Object>> result = Database.select(
+            """
+            SELECT
+            LC."idLogementColoc",
+                LC."dateVisite",
+                LC."idPersonneAjout",
+                LC."dateVisite",
+                LC."abandon",
+                P."nom" AS nomPersonneAjout,
+                P."prenom" AS prenomPersonneAjout,
+                BI."typeImmeuble",
+                BI."numeroAdresse",
+                BI."repetitionAdresse",
+                BI."nomVoieAdresse",
+                BI."codePostalAdresse",
+                BI."nomCommuneAdresse",
+                LC."debitMin",
+                LC."debitMax"
+            FROM
+                LogementColoc LC
+            JOIN
+                Personne P ON LC."idPersonneAjout" = P."idPersonne"
+            JOIN
+                baseImmeuble91 BI ON LC."idImmeuble" = BI."idImmeuble"
+            WHERE
+                LC."idProjetColoc" = """ + CurrentUser.getIdProjetColoc() + """
+                AND LC."abandon" = false
+                AND LC."offreAcceptee" = true
+            """
+        );
+        if(result.size() == 0){
+            return null;
+        }
+        return result.get(0);
+    }
+
+    public static void printPersonnesProjet(){
+        Database.select(
+            "idPersonne, prenom, nom, idProjetColoc",
+            "Personne",
+            "idProjetColoc=" + CurrentUser.getIdProjetColoc()
+        ).forEach(personne -> {
+            Display.print(personne.get("prenom") + " " + personne.get("nom"));
+        });
+    }
+
     // tests
     public static void main(String[] args) {
         // getNoteMoyenne
-        System.out.println(getNoteMoyenne("1201331392"));
+        // System.out.println(getNoteMoyenne("1201331392"));
+        // getLogementAccepted
+        Map<String, Object> logement = getLogementAccepted();
+        Display.printLogement(logement);
     }
 
 }
