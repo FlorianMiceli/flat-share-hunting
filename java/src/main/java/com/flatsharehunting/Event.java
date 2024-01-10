@@ -172,7 +172,7 @@ public class Event {
 
             // display connexion of other logements in the street
             Float avgDebitMinInStreet = Logement.getAverageDebitMinInStreet(logement.get("nomVoieAdresse").toString());
-            Display.print("📊 Debit minimum moyen dans la rue : " + avgDebitMinInStreet + " Mbps");
+            Display.print("📊 Débit moyen dans la rue : " + avgDebitMinInStreet + " Mbps");
             Display.printDivider();
 
             choice = Display.userChoice(
