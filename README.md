@@ -42,6 +42,8 @@ Using data from "Ma connexion internet"
 
 #ajouter un logmenet
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/73ddff0a-4faa-45a1-96c0-0841bfe1a6ef">
+<img width="959" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/7cb99cd7-3181-4232-8abe-9732acf34c15">
+
 
 # Créer proj critere
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/5c4da76e-1e31-4e6b-a984-d01c68ac3f21">
