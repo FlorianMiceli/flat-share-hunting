@@ -2,6 +2,7 @@ package com.flatsharehunting;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import com.flatsharehunting.handleDatabase.Database;
 import java.text.DecimalFormat;
@@ -212,6 +213,15 @@ public class Project {
         if(result.size() == 0){
             return null;
         }
+
+        //add a little percentage of chance to abandon a logement, to simulate rent by someone else
+        Random seed = new Random(Integer.parseInt(result.get(0).get("idLogementColoc").toString()));
+        Integer randomIndex = seed.nextInt(100);
+        if(randomIndex < 3){
+            abandonLogement(result.get(0).get("idLogementColoc").toString());
+            Display.print("Un logement de votre liste a été loué, il n'est plus disponible.");
+        }
+
         return result.get(0);
     }
 
