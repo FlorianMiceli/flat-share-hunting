@@ -1,5 +1,7 @@
 package com.flatsharehunting;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -50,7 +52,6 @@ public class Logement {
     }
 
     /**
-     * @deprecated
      * Get the debit min and max of a logement
      * Randomly select a debit from the corresponding logement in ClasseDebit
      * The same logement will always have the same debit (Randomness is based on the idImmeuble)
@@ -92,6 +93,30 @@ public class Logement {
             """ + CurrentUser.getIdProjetColoc()
         );
         return Float.parseFloat(result.get(0).get("critereDebitMin").toString());
+    }
+
+    /**
+     * Get the average debit min of a street, takes every logement into account
+     * @param nomVoieAdresse
+     * @return Float averageDebitMin #.# format
+     */
+    public static Float getAverageDebitMinInStreet(String nomVoieAdresse) {
+        String result = Database.select(
+            """
+            SELECT AVG(cd."debitMin") AS avg
+            FROM "baseImmeuble91" bi
+            JOIN "eligibiliteActuel91" ea ON bi."idImmeuble" = ea."idImmeuble"
+            JOIN "ClasseDebit" cd ON ea."classeDebitDescendant" = cd."codeEligibilite"
+            WHERE bi."nomVoieAdresse" =
+            """ + "'" + nomVoieAdresse + "'"
+        ).get(0).get("avg").toString();
+        Float res = Float.parseFloat(result);
+        DecimalFormat df = new DecimalFormat("#.#");
+        DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+        dfs.setDecimalSeparator('.');
+        df.setDecimalFormatSymbols(dfs);
+        Float averageDebitMin = Float.parseFloat(df.format(res));
+        return averageDebitMin;
     }
 
     // tests

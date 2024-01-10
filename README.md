@@ -1,17 +1,31 @@
 # Flat share hunting
 A third year school project to learn Java. 
 
-# WIP
+# README WIP
 
 Using data from "Ma connexion internet"
 
-# Dependencies
-- 
+- arcep
+    - https://maconnexioninternet.arcep.fr/
+    - https://www.data.gouv.fr/en/datasets/ma-connexion-internet/
+    - tables eligibilite + immeubles
+    - explications csvs vers db
+    - tables classe eligibilite FillDatabase.java
+- maven
+- sqlite-jbdc 
+    - https://github.com/xerial/sqlite-jdbc
+    - https://github.com/xerial/sqlite-jdbc/blob/master/USAGE.md
+- consoleUI
+- db to decompress 
+- db structure sur drawsql
+- .jar usage
+- emojis [tutorial](https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal)
+- javadoc
 
-# WIP
+# dep
 
 - handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
-- 
+- console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
 
 # Demo
 
@@ -34,3 +48,6 @@ Using data from "Ma connexion internet"
 
 # logmenet accepte
 <img width="959" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/67c64168-3b98-4a4f-bff9-7667636861c1">
+
+
+# javadoc
