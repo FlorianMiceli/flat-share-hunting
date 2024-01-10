@@ -84,7 +84,9 @@ The project is divided in 2 packages at `./java/src/main/java/com/flatsharehunti
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/fe88f4b7-80b2-43a7-865c-66ffeaaa41ae">
 
 #ajouter un logmenet
-<img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/73ddff0a-4faa-45a1-96c0-0841bfe1a6ef">
+<img width="957" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/19a9802c-3e93-495d-a081-59297e0d94ff">
+
+
 
 # Créer proj critere
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/5c4da76e-1e31-4e6b-a984-d01c68ac3f21">
