@@ -25,12 +25,13 @@ Using data from ["Ma connexion internet"](https://maconnexioninternet.arcep.fr/)
 
 Data comes from [data.gouv.fr](https://www.data.gouv.fr/en/datasets/ma-connexion-internet/). The project uses only the data of the [Essonne department (91)](https://en.wikipedia.org/wiki/Essonne) for query speed purposes. Data is stored in a SQLite database. Table "baseImmeuble91" contains informations about the type of building, the number of appartments, their adress, etc. Table "baseEligibilite91" contains informations about the internet speed, the type of internet connection, the provider, etc. More information the [official documentation](https://www.data.gouv.fr/fr/datasets/r/8c21e6a5-ebcb-4eaf-b835-a687abce248d) Database in `./data` needs to be decompressed before use, and here is its model :
 
-The project is built with Maven. Dependencies are listed in `./pom.xml`. This project uses : 
+The project is built with Maven. Dependencies are listed in `./pom.xml`. This project uses :
+
 -  [SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) to handle the database. 
 - [Consoleui](https://github.com/awegmann/consoleui) to have a basic but pleasant interface in the terminal.
 
 
-Even though I restricted the data to the Essonne department, the database is still quite big. It contains 300k+ rows. So querying it can take some time. I used [DBVisualizer](https://www.dbvis.com/) to help me handle the database. 
+Even though I restricted the data to the Essonne department, the database is still quite big. It contains 300k+ rows. So querying it can take some time. I used [DBVisualizer](https://www.dbvis.com/) to help me handle the database.
 
 Javadoc of all methods available in `./java/target/site/apidocs/index.html`.
 
@@ -67,12 +68,20 @@ The project is divided in 2 packages at `./java/src/main/java/com/flatsharehunti
 - handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
 - console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
 
-# Insallation and usage
+# Installation and usage
 
-- todo
+***Your Java version should be 21 LTS***
 
-- handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
-- console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
+> You only need to download the `flat-share-hunting.jar` file and the `database.rar` file in a `./data` folder. Then follow these steps :
+
+1. Decompress `data/datbase.rar`
+2. Follow [this short tutorial](https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal) to enable emojis in the windows terminal. (windows restart is needed)
+3. Make sure to use cmd and not powershell, and run this : 
+```
+java -jar flat-share-hunting.jar
+```
+Then select actions with the ⬆️⬇️ arrows of your keyboard.
+
 
 # Demo
 
@@ -100,3 +109,10 @@ The project is divided in 2 packages at `./java/src/main/java/com/flatsharehunti
 
 
 # javadoc
+
+
+- todo
+
+- handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
+- console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
+
