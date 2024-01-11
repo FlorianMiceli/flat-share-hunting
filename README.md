@@ -59,7 +59,7 @@ The project is divided in 2 packages at `./java/src/main/java/com/flatsharehunti
 
 ***Your Java version should be 21 LTS***
 
-> You only need to download the `flat-share-hunting.jar` file and the `database.rar` file in a `./data` folder. Then follow these steps :
+> You only need to download the `flat-share-hunting.jar` file and the `database.rar` file in a `./data` folder next to it. Then follow these steps :
 
 1. Decompress `data/datbase.rar`
 2. Follow [this short tutorial](https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal) to enable emojis in the windows terminal. (windows restart is needed)
