@@ -25,6 +25,8 @@ Using data from ["Ma connexion internet"](https://maconnexioninternet.arcep.fr/)
 
 Data comes from [data.gouv.fr](https://www.data.gouv.fr/en/datasets/ma-connexion-internet/). The project uses only the data of the [Essonne department (91)](https://en.wikipedia.org/wiki/Essonne) for query speed purposes. Data is stored in a SQLite database. Table "baseImmeuble91" contains informations about the type of building, the number of appartments, their adress, etc. Table "baseEligibilite91" contains informations about the internet speed, the type of internet connection, the provider, etc. More information the [official documentation](https://www.data.gouv.fr/fr/datasets/r/8c21e6a5-ebcb-4eaf-b835-a687abce248d) Database in `./data` needs to be decompressed before use, and here is its model :
 
+![image](https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/6a15b10a-97c9-4ae1-b5f3-792053a18217)
+
 The project is built with Maven. Dependencies are listed in `./pom.xml`. This project uses :
 
 -  [SQLite JDBC driver](https://github.com/xerial/sqlite-jdbc) to handle the database. 
