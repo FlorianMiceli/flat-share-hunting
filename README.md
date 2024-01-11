@@ -53,21 +53,6 @@ The project is divided in 2 packages at `./java/src/main/java/com/flatsharehunti
     - `Project` - interaction with project elements in db
     - `User` - interaction with user elements in db
 
-# notes
-- maven
-- sqlite-jbdc 
-    - https://github.com/xerial/sqlite-jdbc
-    - https://github.com/xerial/sqlite-jdbc/blob/master/USAGE.md
-- consoleUI
-- db to decompress 
-- db structure sur drawsql
-- .jar usage
-- emojis [tutorial](https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal)
-- javadoc
-
-- handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
-- console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
-
 # Installation and usage
 
 ***Your Java version should be 21 LTS***
@@ -111,8 +96,21 @@ Then select actions with the ⬆️⬇️ arrows of your keyboard.
 # javadoc
 
 
-- todo
+# notes
 
 - handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
 - console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
 
+- maven
+- sqlite-jbdc 
+    - https://github.com/xerial/sqlite-jdbc
+    - https://github.com/xerial/sqlite-jdbc/blob/master/USAGE.md
+- consoleUI
+- db to decompress 
+- db structure sur drawsql
+- .jar usage
+- emojis [tutorial](https://akr.am/blog/posts/using-utf-8-in-the-windows-terminal)
+- javadoc
+
+- handleDatabase is built by following [this tutorial](https://www.sqlitetutorial.net/sqlite-java/)
+- console ui usage is descriped [here](https://github.com/awegmann/consoleui/blob/master/doc/howto.md)
