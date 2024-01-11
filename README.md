@@ -7,11 +7,11 @@ A third year school project for the Java module.
 
 # Table of contents
 
-- [Project Overview and Objective](#readme-wip)
+- [Project Overview and Objective](#project-overview-and-objective)
 - [Technical details](#technical-details)
   - [General informations](#general-informations)
   - [Details about project structure](#details-about-project-structure)
-- [Insallation and usage](#insallation-and-usage)
+- [Insallation and usage](#installation-and-usage)
 
 # Project Overview and Objective
 
