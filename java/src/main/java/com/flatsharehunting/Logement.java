@@ -48,6 +48,15 @@ public class Logement {
             ORDER BY RANDOM()
             """
         );
+
+        //add a little percentage of chance to abandon a logement, to simulate rent by someone else
+        Random seed = new Random(Integer.parseInt(result.get(0).get("idLogementColoc").toString()));
+        Integer randomIndex = seed.nextInt(100);
+        if(randomIndex < 3){
+            Project.abandonLogement(result.get(0).get("idLogementColoc").toString());
+            Display.print("Un logement de votre liste a été loué, il n'est plus disponible.");
+        }
+        
         return result.get(0);
     }
 
