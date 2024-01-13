@@ -48,7 +48,9 @@ public class Logement {
             ORDER BY RANDOM()
             """
         );
-
+        if(result.size() == 0){
+            return null;
+        }
         return result.get(0);
     }
 
