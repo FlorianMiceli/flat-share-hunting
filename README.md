@@ -73,12 +73,11 @@ Then select actions with the ⬆️⬇️ arrows of your keyboard.
 # Features
 
 
-### Login
+### Login or create an account
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/252c8486-dfbe-4601-bc56-45fb2637093d">
 
-
-### See list of saved locations
-<img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/f4316a85-e21b-4d67-b2aa-04baf7474768">
+### Create a new project
+<img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/5c4da76e-1e31-4e6b-a984-d01c68ac3f21">
 
 ### Home page
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/fe88f4b7-80b2-43a7-865c-66ffeaaa41ae">
@@ -86,10 +85,8 @@ Then select actions with the ⬆️⬇️ arrows of your keyboard.
 ### Add a new location
 <img width="957" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/19a9802c-3e93-495d-a081-59297e0d94ff">
 
-
-
-### Create a new project
-<img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/5c4da76e-1e31-4e6b-a984-d01c68ac3f21">
+### See list of saved locations
+<img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/f4316a85-e21b-4d67-b2aa-04baf7474768">
 
 ### Final project page
 <img width="959" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/67c64168-3b98-4a4f-bff9-7667636861c1">
