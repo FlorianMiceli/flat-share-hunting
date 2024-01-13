@@ -1,4 +1,4 @@
-# Flat share hunting 🏠 - WIP
+# Flat share hunting 🏠
 A third year school project for the Java module.
 
 <img width="958" alt="image" src="https://github.com/FlorianMiceli/flat-share-hunting/assets/103659071/252c8486-dfbe-4601-bc56-45fb2637093d">
